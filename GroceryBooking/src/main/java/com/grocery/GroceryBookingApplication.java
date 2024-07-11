@@ -38,6 +38,18 @@ public class GroceryBookingApplication {
 	}
 	
 	@Bean
+	public String dbUrl() {
+		String secretJson = getSecret();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            Map<String, String> secretMap = objectMapper.readValue(secretJson, Map.class);
+            return secretMap.get("dbUrl");
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to parse secret JSON", e);
+        }
+	}
+	
+	@Bean
 	public String dbUserName() {
 		String secretJson = getSecret();
         ObjectMapper objectMapper = new ObjectMapper();
